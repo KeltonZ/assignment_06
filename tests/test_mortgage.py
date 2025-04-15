@@ -748,4 +748,38 @@ class MortgageTests(TestCase):
         result = str(mortgage_payment)
 
         #Assert
-        self.assertEqual(result, expected)        
+        self.assertEqual(result, expected)    
+
+    def test_repr_validate_mortgage_obj(self):
+        """
+        Testing to validate Data values of Mortgage and are correct
+        Args:
+            Mortgage_obj(loan_amount, rate, frequency, amortization)
+                loan-amount:
+                    will be formatted in the expected variable to be 2 decimal places.
+            rate_formatted: 
+                Takes the assigned value of rate and validates against MortgageRate class
+                and returns the value 
+            frequency_formatted:
+                Takes the assigned value of frequency and validates against PaymentFrequency class
+                and returns the value 
+            expected(loan_amount, rate_formatted, frequency_formatted, amortization)
+            result:
+                calls the repr method using mortgage_obj as the argument, all attributes assigned to 
+                mortgage_obj are assigned here as well for ease of testing.
+        """
+        #Arrange
+        loan_amount = 934532
+        rate = "FIXED_3"
+        frequency = "MONTHLY"
+        amortization = 20 
+        rate_formatted = MortgageRate[rate].value
+        frequency_formatted = PaymentFrequency[frequency].value
+        mortgage_obj = Mortgage(loan_amount, rate, frequency, amortization)
+        expected = (f"Mortgage({loan_amount:.2f}, {rate_formatted}, {frequency_formatted}, {amortization})")
+        
+        #Act
+        result = repr(mortgage_obj)
+
+        #Assert
+        self.assertEqual(result, expected)
