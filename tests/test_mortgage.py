@@ -690,15 +690,62 @@ class MortgageTests(TestCase):
         self.assertAlmostEqual(calculated_payment, expected, places=2)
 
     def test_str_represent_monthly_payment(self):
-        
+        """
+        Testing the formatting of str() method with "MONTHLY" value
+
+            Args: 
+                Mortgage(loan_amount, rate, frequency, amortization)      
+            
+        """
         #Arrange
-        mortgage_payment = Mortgage(934532, "FIXED_3", "MONTHLY", 20)
-        expected = ("Mortgage Amount: $934,532.00\n""Rate: 5.89%\n""Amortization: 20\n""Frequency: Monthly -- Calculated Payment: $6,636.11")
+        frequency = "MONTHLY"
+        mortgage_payment = Mortgage(934532, "FIXED_3", frequency, 20)
+        frequency_formatted = PaymentFrequency[str(frequency)].name.replace("_", " ").title()
+        payment = mortgage_payment.calculate_payment()
+        expected = ("Mortgage Amount: $934,532.00\n""Rate: 5.89%\n""Amortization: 20\n"f"Frequency: {frequency_formatted} -- Calculated Payment: ${payment:,.2f}")
         
         #Act
         result = str(mortgage_payment)
 
         #Assert
         self.assertEqual(result, expected)
-
     
+    def test_str_represent_biweekly_payment(self):
+        """
+        Testing the formatting of str() method with "BI_WEEKLY" value
+
+            Args: 
+                Mortgage(loan_amount, rate, frequency, amortization)      
+            
+        """
+        #Arrange
+        frequency = "BI_WEEKLY"
+        mortgage_payment = Mortgage(934532, "FIXED_3", frequency, 20)
+        frequency_formatted = PaymentFrequency[str(frequency)].name.replace("_", " ").title()
+        payment = mortgage_payment.calculate_payment()
+        expected = ("Mortgage Amount: $934,532.00\n""Rate: 5.89%\n""Amortization: 20\n"f"Frequency: {frequency_formatted} -- Calculated Payment: ${payment:,.2f}")
+        
+        #Act
+        result = str(mortgage_payment)
+
+        #Assert
+        self.assertEqual(result, expected)        
+    
+    def test_represent_weekly_payment(self):
+        """
+        Testing the formatting of str() method with "WEEKLY" value
+
+            Args: 
+                Mortgage(loan_amount, rate, frequency, amortization)     
+        """
+        frequency = "WEEKLY"
+        mortgage_payment = Mortgage(934532, "FIXED_3", frequency, 20)
+        frequency_formatted = PaymentFrequency[str(frequency)].name.replace("_", " ").title()
+        payment = mortgage_payment.calculate_payment()
+        expected = ("Mortgage Amount: $934,532.00\n""Rate: 5.89%\n""Amortization: 20\n"f"Frequency: {frequency_formatted} -- Calculated Payment: ${payment:,.2f}")
+        
+        #Act
+        result = str(mortgage_payment)
+
+        #Assert
+        self.assertEqual(result, expected)        

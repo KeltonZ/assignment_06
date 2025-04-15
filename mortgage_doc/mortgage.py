@@ -28,12 +28,10 @@ class Mortgage:
             
         """
         
-        self.__loan_amount = loan_amount
-        self.__amortization = amortization
-
-        if self.__loan_amount <= 0:
+        if loan_amount <= 0:
             raise ValueError("Loan Amount must be positive.")
-
+        else:
+            self.__loan_amount = loan_amount
         try:
             self.__rate = MortgageRate[str(rate)]
         except Exception as e:
@@ -44,9 +42,10 @@ class Mortgage:
         except Exception as e:
             raise ValueError("Frequency provided is invalid.")
         
-        if self.__amortization not in VALID_AMORTIZATION:
+        if amortization not in VALID_AMORTIZATION:
             raise ValueError("Amortization provided is invalid.")
-    
+        else:
+            self.__amortization = amortization
 
     @property
     def loan_amount(self):
@@ -156,21 +155,26 @@ class Mortgage:
         self.__amortization = amortization
 
     def calculate_payment(self) -> float:
+        """
+        Calculates the mortgage payments made per selected period
+        
+        P: Principle loan amount (loan_amount)
+        i: Interest rate (rate divided by frequency)
+        n: number of payments (amortization multiplied by frequency)
+        calculated payment: The final result of the formula  
 
+        """
         P = self.__loan_amount
         i = self.__rate.value / self.__frequency.value
         n = self.amortization * self.__frequency.value
         calculated_payment = P * (i*(1 + i) **n) / ((1+ i) **n -1)
-        """
-        print(f"Loan Amount (P): {P}")
-        print(f"Annual Rate: {self.__rate.value}")
-        print(f"Frequency per Year: {self.__frequency.value}")
-        print(f"Interest Rate per Payment (i): {i}")
-        print(f"Total Payments (n): {n}")
-        """
-        return (calculated_payment)
+        return (calculated_payment) #originally used the round() function but I encountered issues with :.,2f formatting so I removed until I think of a better way.
     
     def __str__(self):
+        """
+        Returns the values of each data input and prints them formatted to 2 decimal points and 
+        using proper $ formatting. Can be called to print to terminal for readability
+        """
         loan_amount = f"${self.__loan_amount:,.2f}"
         rate = f"{self.__rate.value * 100:,.2f}%"
         frequency = self.__frequency.name.replace("_", " ").title()
@@ -182,14 +186,28 @@ class Mortgage:
                 f"Amortization: {amortization}\n"
                 f"Frequency: {frequency} -- Calculated Payment: {calculated_payment}")
     
-if __name__ == "__main__":   
+    def __repr__(self):
+        """
+        shows the values of selected data for debugging purposes. 
+            loan_amount:
+                set to 2 decimal points
+        """
+        loan_amount = f"{self.__loan_amount:.2f}"
+        rate = f"{self.__rate.value}"
+        frequency = self.__frequency.value
+        amortization = self.amortization
+    
+        return (f"Mortgage({loan_amount}, {rate}, {frequency}, {amortization})")
+    
+if __name__ == "__main__":
     
     mortgage = Mortgage(934532, "FIXED_3", "MONTHLY", 20)
 
-    # Calculate the payment
-    #payment = mortgage.calculate_payment()
-    report = mortgage.__str__()
+    
+    print(str(mortgage))
+    print(repr(mortgage))
 
-    # Print the result to the terminal
-    #print(f"Your regular mortgage payment is: ${payment}")
-    print(report)
+
+   
+    
+
