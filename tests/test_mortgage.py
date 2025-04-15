@@ -6,7 +6,7 @@ Usage: Use the tests encapsulated within this class to test the MortgagePayment 
 """
 
 from unittest import TestCase
-from mortgage_doc.mortgage import Mortgage, __init__
+from mortgage_doc.mortgage import Mortgage
 from mortgage_doc.pixell_lookup import MortgageRate, PaymentFrequency
 
 class MortgageTests(TestCase):
@@ -228,7 +228,6 @@ class MortgageTests(TestCase):
                 represents the value for amortization attribute
         """
         # Arrange
-
         loan_amount = 500.0
         rate = "FIXED_3"
         frequency = "MONTHLY"

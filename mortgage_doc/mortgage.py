@@ -199,13 +199,12 @@ class Mortgage:
     
         return (f"Mortgage({loan_amount}, {rate}, {frequency}, {amortization})")
     
-if __name__ == "__main__":
-    
-    mortgage = Mortgage(934532, "FIXED_3", "MONTHLY", 20)
 
     
-    print(str(mortgage))
-    print(repr(mortgage))
+  
+
+    
+ 
 
 
    
