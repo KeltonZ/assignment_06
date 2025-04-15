@@ -381,3 +381,324 @@ class MortgageTests(TestCase):
         with self.assertRaises(ValueError) as context:
             invalid_amort.amortization = 6
         self.assertEqual(expected, str(context.exception))
+
+        #Calculation tests
+        #initial test 1 rate = FIXED_3 frequency = MONTHLY amortization = 15
+        #Test rate: FIXED_1
+        #Test rate: FIXED_5
+        #Test rate: VARIABLE_1
+        #Test rate: VARIABLE_3
+        #Test rate: VARIABLE_5
+        #Test frequency: "BI_WEEKLY"
+        #Test frequency: "WEEKLY"
+        #Test amortization: 5
+        #Test amortization: 10
+        #Test amortization: 20
+        #Test amortization: 25
+        #Test amortization: 30
+
+    def test_initial_calculate_payment(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, Giving only valid input values.
+
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_3", "MONTHLY", 15)
+        expected = 7830.68
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+    
+    def test_calculate_payment_rate_fixed_1(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing MortgageRate: "FIXED_1"
+
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_1", "MONTHLY", 15)
+        expected = 7881.06
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+    
+    def test_calculate_payment_rate_fixed_5(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing MortgageRate: "FIXED_5"
+
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_5", "MONTHLY", 15)
+        expected = 7483.04
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)    
+    
+    
+    def test_calculate_payment_rate_variable_1(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing MortgageRate: "VARIABLE_1"
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_1", "MONTHLY", 15)
+        expected = 8290.5
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    
+    def test_calculate_payment_rate_variable_3(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing MortgageRate: "VARIABLE_3"
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_3", "MONTHLY", 15)
+        expected = 8238.71
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_calculate_payment_rate_variable_5(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing MortgageRate: "VARIABLE_5"
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "MONTHLY", 15)
+        expected = 8135.64
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+    
+    def test_calculate_payment_frequency_biweekly(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing PaymentFrequency: "BI_WEEKLY"
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "BI_WEEKLY", 15)
+        expected = 3751.69
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_calculate_payment_frequency_weekly(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing PaymentFrequency: "WEEKLY"
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "WEEKLY", 15)
+        expected = 1875.15
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+    
+    def test_calculate_payment_amortization_5(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing VALID_AMORTIZATION: 5
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "WEEKLY", 5)
+        expected = 4211.25
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_calculate_payment_amortization_10(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing VALID_AMORTIZATION: 10
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "WEEKLY", 10)
+        expected = 2444.09
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_calculate_payment_amortization_20(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing VALID_AMORTIZATION: 20
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "WEEKLY", 20)
+        expected = 1605.02
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_calculate_payment_amortization_25(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing VALID_AMORTIZATION: 25
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "WEEKLY", 25)
+        expected = 1453.61
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_calculate_payment_amortization_30(self):
+        """
+        Testing the functionality of the Mortgage payments calculator, testing VALID_AMORTIZATION: 30
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "VARIABLE_5", "WEEKLY", 30)
+        expected = 1360.79
+
+        #Act
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+
+        #Calculation tests with mutator
+        #loan_amount
+        #rate
+        #frequency
+        #amortization
+    
+    def test_calculate_payment_mutator_loan(self):
+        """
+        Testing the functionality of the Mortgage payments calculator when using loan mutator
+
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_3", "MONTHLY", 15)        
+        expected = 6267.53
+        
+        #Act
+        mortgage_payment.loan_amount = 747982
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+    
+    def test_calculate_payment_mutator_rate(self):
+        """
+        Testing the functionality of the Mortgage payments calculator when using rate mutator
+
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_3", "MONTHLY", 15) 
+        expected = 8238.71 
+
+        #Act
+        mortgage_payment.rate = "VARIABLE_3"
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+    
+    def test_calculate_payment_mutator_frequency(self):
+        """
+        Testing the functionality of the Mortgage payments calculator when using frequency calculator
+
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_3", "MONTHLY", 15)
+        expected = 3611.2
+        
+        #Act 
+        mortgage_payment.frequency = "BI_WEEKLY" 
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_calculate_payment_mutator_amortization(self):
+        """
+        Testing the functionality of the Mortgage payments calculator when using amortization mutator
+        Args:
+            class Mortgage(loan_amount, rate, frequency, amortization)
+        """
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_3", "BI_WEEKLY", 20)
+        expected = 3060.7
+
+
+        #Act 
+        mortgage_payment.amortization = 20
+        calculated_payment = mortgage_payment.calculate_payment()
+
+        #Assert
+        self.assertAlmostEqual(calculated_payment, expected, places=2)
+
+    def test_str_represent_monthly_payment(self):
+        
+        #Arrange
+        mortgage_payment = Mortgage(934532, "FIXED_3", "MONTHLY", 20)
+        expected = ("Mortgage Amount: $934,532.00\n""Rate: 5.89%\n""Amortization: 20\n""Frequency: Monthly -- Calculated Payment: $6,636.11")
+        
+        #Act
+        result = str(mortgage_payment)
+
+        #Assert
+        self.assertEqual(result, expected)
+
+    

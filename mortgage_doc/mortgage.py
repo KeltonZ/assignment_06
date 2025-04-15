@@ -47,9 +47,6 @@ class Mortgage:
         if self.__amortization not in VALID_AMORTIZATION:
             raise ValueError("Amortization provided is invalid.")
     
-      
-        
-            
 
     @property
     def loan_amount(self):
@@ -60,6 +57,7 @@ class Mortgage:
         """
         
         return self.__loan_amount
+
     
     @loan_amount.setter
     def loan_amount(self, loan_amount: float) -> None:
@@ -89,7 +87,8 @@ class Mortgage:
             float: MortgageRate value 
         """
         return self.__rate
-    
+
+
     @rate.setter
     def rate(self, rate: str) -> MortgageRate:
         """
@@ -104,6 +103,7 @@ class Mortgage:
         
         self.__rate = rate
 
+
     @property
     def frequency(self):
         """
@@ -114,7 +114,7 @@ class Mortgage:
         """
 
         return self.__frequency
-    
+
 
     @frequency.setter
     def frequency(self, frequency: str) -> PaymentFrequency:
@@ -130,6 +130,7 @@ class Mortgage:
 
         self.__frequency = frequency
 
+
     @property
     def amortization(self):
         """
@@ -139,7 +140,8 @@ class Mortgage:
             int: VALID_AMORTIZATION key-value 
         """
         return self.__amortization
-    
+
+
     @amortization.setter
     def amortization(self, amortization: int):
         """
@@ -153,4 +155,41 @@ class Mortgage:
         
         self.__amortization = amortization
 
+    def calculate_payment(self) -> float:
 
+        P = self.__loan_amount
+        i = self.__rate.value / self.__frequency.value
+        n = self.amortization * self.__frequency.value
+        calculated_payment = P * (i*(1 + i) **n) / ((1+ i) **n -1)
+        """
+        print(f"Loan Amount (P): {P}")
+        print(f"Annual Rate: {self.__rate.value}")
+        print(f"Frequency per Year: {self.__frequency.value}")
+        print(f"Interest Rate per Payment (i): {i}")
+        print(f"Total Payments (n): {n}")
+        """
+        return (calculated_payment)
+    
+    def __str__(self):
+        loan_amount = f"${self.__loan_amount:,.2f}"
+        rate = f"{self.__rate.value * 100:,.2f}%"
+        frequency = self.__frequency.name.replace("_", " ").title()
+        amortization = self.amortization
+        calculated_payment = f"${self.calculate_payment():,.2f}"
+
+        return (f"Mortgage Amount: {loan_amount}\n"
+                f"Rate: {rate}\n"
+                f"Amortization: {amortization}\n"
+                f"Frequency: {frequency} -- Calculated Payment: {calculated_payment}")
+    
+if __name__ == "__main__":   
+    
+    mortgage = Mortgage(934532, "FIXED_3", "MONTHLY", 20)
+
+    # Calculate the payment
+    #payment = mortgage.calculate_payment()
+    report = mortgage.__str__()
+
+    # Print the result to the terminal
+    #print(f"Your regular mortgage payment is: ${payment}")
+    print(report)
